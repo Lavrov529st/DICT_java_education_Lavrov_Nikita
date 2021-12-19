@@ -16,6 +16,25 @@ public class ChatBot {
         System.out.println("I was created in " + localDate);
         Scanner s11 = new Scanner(System.in);
         System.out.println("What a great name you have, " + s11.nextLine());
+
+        System.out.println("Enter remainders of dividing your age by 3, 5 and 7.");
+        ChatBot chatBot = new ChatBot();
+        chatBot.calcAge(s11);
+
+
+
+
     }
+
+    private void calcAge(Scanner s11) {
+        int remainder7 = s11.nextInt();
+        int remainder5 = s11.nextInt();
+        int remainder3 = s11.nextInt();
+        int age = (remainder3 * 70 + remainder5 * 21 + remainder7 * 15) % 105;
+        System.out.println("Your age is " + age + " that's a good time to start programming!");
+
+    }
+
+
 }
 
