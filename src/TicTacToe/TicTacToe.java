@@ -1,6 +1,7 @@
 package TicTacToe;
 
 import java.util.Scanner;
+import java.util.*;
 
 public class TicTacToe {
     public static void main(String[] args) {
@@ -10,131 +11,61 @@ public class TicTacToe {
 
         String input = sc.nextLine();
 
+        printGrid(input);
+
+        while (true) {
+
+            try {
+
+                System.out.print("Enter the coordinates: ");
+
+                int x = sc.nextInt();
+                int y = sc.nextInt();
+                int target = -1;
+
+                if ((x < 1 || x > 3) || (y < 1 || y > 3)) {
+                    System.out.println("Coordinates should be from 1 to 3!");
+                } else {
+                    if (x == 1) {
+                        target = y - x;
+                    } else if (x == 2) {
+                        target = x + y;
+                    } else if (x == 3 && y == 1) {
+                        target = 6;
+                    } else if (x == 3 && y == 2) {
+                        target = 7;
+                    } else if (x == 3 && y == 3) {
+                        target = 8;
+                    }
+                }
+
+                if (target != -1 && input.charAt(target) == '_') {
+
+                    char[] arr = input.toCharArray();
+                    arr[target] = 'X';
+                    input = String.valueOf(arr);
+                    break;
+                } else {
+                    System.out.println("This cell is occupied! Choose another one!");
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("You should enter numbers!");
+                sc.next();
+            }
+        }
+
+        printGrid(input);
+    }
+
+    public static void printGrid(String str) {
+
         System.out.println("---------");
 
-        System.out.println("| " + input.charAt(0) + " " + input.charAt(1) + " " + input.charAt(2) + " |");
-        System.out.println("| " + input.charAt(3) + " " + input.charAt(4) + " " + input.charAt(5) + " |");
-        System.out.println("| " + input.charAt(6) + " " + input.charAt(7) + " " + input.charAt(8) + " |");
+        System.out.println("| " + str.charAt(0) + " " + str.charAt(1) + " " + str.charAt(2) + " |");
+        System.out.println("| " + str.charAt(3) + " " + str.charAt(4) + " " + str.charAt(5) + " |");
+        System.out.println("| " + str.charAt(6) + " " + str.charAt(7) + " " + str.charAt(8) + " |");
 
         System.out.println("---------");
-
-        if (input.contains("_")) {
-
-            if ((countX(input) - countO(input) > 1) || (countO(input) - countX(input) > 1)) {
-                System.out.println("Impossible");
-            } else if (bothWon(input)) {
-                System.out.println("Impossible");
-            } else if (xWon(input)) {
-                System.out.println("X wins");
-            } else if (oWon(input)) {
-                System.out.println("O wins");
-            } else {
-                System.out.println("Game not finished");
-            }
-        } else {
-
-            if (bothWon(input)) {
-                System.out.println("Impossible");
-            } else if (xWon(input)) {
-                System.out.println("X wins");
-            } else if (oWon(input)) {
-                System.out.println("O wins");
-            } else {
-                System.out.println("Draw");
-            }
-        }
-    }
-
-    public static int countX(String str) {
-
-        int count = 0;
-
-        for (int i = 0; i < str.length(); i++) {
-
-            if (str.charAt(i) == 'X') {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public static int countO(String str) {
-
-        int count = 0;
-
-        for (int i = 0; i < str.length(); i++) {
-
-            if (str.charAt(i) == 'O') {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public static boolean bothWon(String str) {
-
-        if (((str.charAt(0) + str.charAt(1) + str.charAt(2) == 88 * 3) || (str.charAt(0) + str.charAt(1) + str.charAt(2) == 79 * 3)) &&
-                ((str.charAt(3) + str.charAt(4) + str.charAt(5) == 88 * 3) || (str.charAt(3) + str.charAt(4) + str.charAt(5) == 79 * 3))) {
-            return true;
-        }
-
-        else if (((str.charAt(0) + str.charAt(1) + str.charAt(2) == 88 * 3) || (str.charAt(0) + str.charAt(1) + str.charAt(2) == 79 * 3)) &&
-                ((str.charAt(6) + str.charAt(7) + str.charAt(8) == 88 * 3) || (str.charAt(6) + str.charAt(7) + str.charAt(8) == 79 * 3))) {
-            return true;
-        }
-
-        else if (((str.charAt(3) + str.charAt(4) + str.charAt(5) == 88 * 3) || (str.charAt(3) + str.charAt(4) + str.charAt(5) == 79 * 3)) &&
-                ((str.charAt(6) + str.charAt(7) + str.charAt(8) == 88 * 3) || (str.charAt(6) + str.charAt(7) + str.charAt(8) == 79 * 3))) {
-            return true;
-        }
-
-        else if (((str.charAt(0) + str.charAt(3) + str.charAt(6) == 88 * 3) || (str.charAt(0) + str.charAt(3) + str.charAt(6) == 79 * 3)) &&
-                ((str.charAt(1) + str.charAt(4) + str.charAt(7) == 88 * 3) || (str.charAt(1) + str.charAt(4) + str.charAt(7) == 79 * 3))) {
-            return true;
-        }
-
-        else if (((str.charAt(0) + str.charAt(3) + str.charAt(6) == 88 * 3) || (str.charAt(0) + str.charAt(3) + str.charAt(6) == 79 * 3)) &&
-                ((str.charAt(2) + str.charAt(5) + str.charAt(8) == 88 * 3) || (str.charAt(2) + str.charAt(5) + str.charAt(8) == 79 * 3))) {
-            return true;
-        }
-
-        else if (((str.charAt(1) + str.charAt(4) + str.charAt(7) == 88 * 3) || (str.charAt(1) + str.charAt(4) + str.charAt(7) == 79 * 3)) &&
-                ((str.charAt(2) + str.charAt(5) + str.charAt(8) == 88 * 3) || (str.charAt(2) + str.charAt(5) + str.charAt(8) == 79 * 3))) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static boolean xWon(String str) {
-
-        if ((str.charAt(0) == 'X' && str.charAt(1) == 'X' && str.charAt(2) == 'X') ||
-                (str.charAt(3) == 'X' && str.charAt(4) == 'X' && str.charAt(5) == 'X') ||
-                (str.charAt(6) == 'X' && str.charAt(7) == 'X' && str.charAt(8) == 'X') ||
-                (str.charAt(0) == 'X' && str.charAt(3) == 'X' && str.charAt(6) == 'X') ||
-                (str.charAt(1) == 'X' && str.charAt(4) == 'X' && str.charAt(7) == 'X') ||
-                (str.charAt(2) == 'X' && str.charAt(5) == 'X' && str.charAt(8) == 'X') ||
-                (str.charAt(0) == 'X' && str.charAt(4) == 'X' && str.charAt(8) == 'X') ||
-                (str.charAt(2) == 'X' && str.charAt(4) == 'X' && str.charAt(6) == 'X')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static boolean oWon(String str) {
-
-        if ((str.charAt(0) == 'O' && str.charAt(1) == 'O' && str.charAt(2) == 'O') ||
-                (str.charAt(3) == 'O' && str.charAt(4) == 'O' && str.charAt(5) == 'O') ||
-                (str.charAt(6) == 'O' && str.charAt(7) == 'O' && str.charAt(8) == 'O') ||
-                (str.charAt(0) == 'O' && str.charAt(3) == 'O' && str.charAt(6) == 'O') ||
-                (str.charAt(1) == 'O' && str.charAt(4) == 'O' && str.charAt(7) == 'O') ||
-                (str.charAt(2) == 'O' && str.charAt(5) == 'O' && str.charAt(8) == 'O') ||
-                (str.charAt(0) == 'O' && str.charAt(4) == 'O' && str.charAt(8) == 'O') ||
-                (str.charAt(2) == 'O' && str.charAt(4) == 'O' && str.charAt(6) == 'O')) {
-            return true;
-        }
-
-        return false;
     }
 }
